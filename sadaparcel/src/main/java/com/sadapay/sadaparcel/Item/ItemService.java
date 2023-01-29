@@ -18,4 +18,10 @@ public class ItemService {
     {
         return itemRepository.findAll();
     }
+
+    public Item addNew(Item item)
+    {
+        itemRepository.save(item);
+        return item;
+    }
 }
