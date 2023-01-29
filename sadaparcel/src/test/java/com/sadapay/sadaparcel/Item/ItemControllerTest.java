@@ -27,4 +27,9 @@ class ItemControllerTest {
         assertThat(actualItems).isEqualTo(expectedItems);
         assertThat(actualItems.size()).isEqualTo(3);
     }
+
+    @Test
+    void givenValidItem_registerNewItem_ShouldReturn201AndSavedItem() {
+
+    }
 }
