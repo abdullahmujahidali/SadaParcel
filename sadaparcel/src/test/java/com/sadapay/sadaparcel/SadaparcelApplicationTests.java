@@ -9,14 +9,11 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.Fail.fail;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertFalse;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -84,7 +81,6 @@ class SadaparcelApplicationTests {
 
 	@Test
 	void givenExistingItemId_WhenDeleteItemEndpointCalled_ShouldRemoveItemFromRepository() {
-		// Arrange
 		UUID itemId = UUID.randomUUID();
 		Item payload = new Item(
 				itemId,
@@ -99,14 +95,10 @@ class SadaparcelApplicationTests {
 
 	@Test
 	void givenNonExistingItemId_WhenDeleteItemEndpointCalled_ShouldThrowIllegalStateException() {
-		// Arrange
 		UUID itemId = UUID.randomUUID();
-
-		// Act
 		try {
 			restTemplate.delete("http://localhost:" + port + "/api/v1/item/" + itemId);
 		} catch (Exception e) {
-			// Assert
 			assertTrue(e instanceof IllegalStateException);
 			assertTrue(e.getMessage().contains("does not exists"));
 		}

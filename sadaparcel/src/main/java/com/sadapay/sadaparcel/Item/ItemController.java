@@ -46,7 +46,9 @@ public class ItemController {
         itemService.deleteItem(itemId);
     }
 
-
-
+    @PutMapping("{itemId}")
+    public void updateItem(@Valid @PathVariable("itemId") UUID itemId, @RequestBody Item item){
+        itemService.updateItem(itemId, item);
+    }
 
 }
