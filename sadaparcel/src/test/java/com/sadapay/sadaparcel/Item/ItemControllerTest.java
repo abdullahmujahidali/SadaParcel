@@ -27,4 +27,17 @@ class ItemControllerTest {
         assertThat(actualItems).isEqualTo(expectedItems);
         assertThat(actualItems.size()).isEqualTo(3);
     }
+
+    @Test
+    void givenValidItem_registerNewItem_ShouldReturn201AndSavedItem() {
+        ItemService itemService = mock(ItemService.class);
+        ItemController itemController = new ItemController(itemService);
+        Item newItem = new Item("orange", 15, 20.0);
+        assertThat(newItem.getTitle()).isInstanceOf(String.class).isNotNull();
+        assertThat(newItem.getQuantity()).isInstanceOf(Integer.class).isNotNull();
+        assertThat(newItem.getPrice()).isInstanceOf(Double.class).isNotNull();
+        when(itemService.addNew(newItem)).thenReturn(newItem);
+        Item actualItem = itemController.registerNewItem(newItem).getBody();
+        assertThat(actualItem).isEqualTo(newItem);
+    }
 }

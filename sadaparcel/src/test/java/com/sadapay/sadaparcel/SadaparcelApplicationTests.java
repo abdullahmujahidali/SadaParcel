@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SadaparcelApplicationTests {
@@ -30,6 +31,21 @@ class SadaparcelApplicationTests {
 		ResponseEntity<Item[]> response = restTemplate.getForEntity(baseUrl, Item[].class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(response.getBody().length).isGreaterThanOrEqualTo(2);
+	}
+
+	@Test
+	void givenNewItem_PostItemEndpoint_ShouldAddNewItem(){
+		String baseUrl = "http://localhost:" + port + "/api/v1/item";
+		Item payload = new Item(
+				"Butter",
+				20,
+				1.4
+		);
+		ResponseEntity<Item> response = restTemplate.postForEntity(baseUrl, payload ,Item.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+		Item newData = response.getBody();
+		assertThat(newData).isNotNull();
+		assertEquals("Item names should be same", payload.getTitle(), newData.getTitle());
 	}
 
 }
