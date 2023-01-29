@@ -6,9 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @RestController
@@ -55,6 +57,16 @@ public class ItemController {
             return ResponseEntity.badRequest().build();
         }
     }
+    @PatchMapping("/{itemId}")
+    public ResponseEntity<Void> updateDiscount(@Valid @PathVariable("itemId") UUID itemId, @RequestBody ItemDiscountDTO itemDTO) {
+        try {
+            itemService.updateItemDiscount(itemId, itemDTO);
+            return ResponseEntity.noContent().build();
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 
 
 }

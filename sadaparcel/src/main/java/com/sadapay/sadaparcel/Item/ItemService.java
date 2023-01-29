@@ -49,6 +49,15 @@ public class ItemService {
         itemToUpdate.setPrice(item.getPrice());
         itemRepository.save(itemToUpdate);
     }
+    public void updateItemDiscount(UUID itemId, ItemDiscountDTO itemDTO) {
+        if (!itemRepository.existsById(itemId)) {
+            throw new IllegalArgumentException("Item with id " + itemId + " does not exist");
+        }
+        Item item = itemRepository.findById(itemId).get();
+        item.setIsDiscount(itemDTO.getIsDiscount());
+        itemRepository.save(item);
+    }
+
 
     private void validateItem(Item item) throws ValidationException {
         if (item.getTitle() == null || item.getTitle().isEmpty()) {
