@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.*;
 
 
@@ -50,5 +52,21 @@ class ItemControllerTest {
         itemController.deleteItem(itemId);
         List<Item> updatedItems = itemController.getItems();
         assertThat(updatedItems.stream().anyMatch(item -> item.getId().equals(itemId))).isFalse();
+    }
+
+    @Test
+    void givenValidItemIdAndItem_updateItem_ShouldUpdateTheItem() {
+        ItemService itemService = mock(ItemService.class);
+        ItemController itemController = new ItemController(itemService);
+        UUID itemId = UUID.randomUUID();
+        Item expectedItem = new Item(itemId, "apple", 20, 10.0);
+        Item originalItem = new Item(itemId, "banana", 20, 20.0);
+        doNothing().when(itemService).updateItem(itemId, expectedItem);
+        itemController.updateItem(itemId, expectedItem);
+        verify(itemService, times(1)).updateItem(itemId, expectedItem);
+        assertEquals(expectedItem.getId(), originalItem.getId());
+        assertEquals(expectedItem.getQuantity(), originalItem.getQuantity());
+        assertNotEquals(expectedItem.getTitle(), originalItem.getTitle());
+        assertNotEquals(expectedItem.getPrice(), originalItem.getPrice());
     }
 }

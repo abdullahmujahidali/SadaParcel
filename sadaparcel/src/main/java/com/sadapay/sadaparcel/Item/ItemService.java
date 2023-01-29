@@ -2,6 +2,7 @@ package com.sadapay.sadaparcel.Item;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ValidationException;
 import java.util.List;
@@ -34,6 +35,19 @@ public class ItemService {
             throw new IllegalStateException("Item with id " + itemId + " does not exists");
         }
         itemRepository.deleteById(itemId);
+    }
+
+    @Transactional
+    public void updateItem(UUID itemId, Item item) {
+        boolean exists = itemRepository.existsById(itemId);
+        if(!exists){
+            throw new IllegalStateException("Item with id " + itemId + " does not exists");
+        }
+        Item itemToUpdate = itemRepository.findById(itemId).get();
+        itemToUpdate.setTitle(item.getTitle());
+        itemToUpdate.setQuantity(item.getQuantity());
+        itemToUpdate.setPrice(item.getPrice());
+        itemRepository.save(itemToUpdate);
     }
 
     private void validateItem(Item item) throws ValidationException {

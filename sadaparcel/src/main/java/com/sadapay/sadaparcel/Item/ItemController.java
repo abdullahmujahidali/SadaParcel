@@ -46,7 +46,15 @@ public class ItemController {
         itemService.deleteItem(itemId);
     }
 
-
+    @PutMapping("{itemId}")
+    public ResponseEntity<Void> updateItem(@Valid @PathVariable("itemId") UUID itemId, @RequestBody Item item){
+        try {
+            itemService.updateItem(itemId, item);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
 
 }

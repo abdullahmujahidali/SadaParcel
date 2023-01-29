@@ -7,16 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.Fail.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertFalse;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -29,7 +29,6 @@ class SadaparcelApplicationTests {
 
 	@Autowired
 	private ItemRepository itemRepository;
-
 
 	@Test
 	void contextLoads() {
@@ -84,7 +83,6 @@ class SadaparcelApplicationTests {
 
 	@Test
 	void givenExistingItemId_WhenDeleteItemEndpointCalled_ShouldRemoveItemFromRepository() {
-		// Arrange
 		UUID itemId = UUID.randomUUID();
 		Item payload = new Item(
 				itemId,
@@ -99,18 +97,34 @@ class SadaparcelApplicationTests {
 
 	@Test
 	void givenNonExistingItemId_WhenDeleteItemEndpointCalled_ShouldThrowIllegalStateException() {
-		// Arrange
 		UUID itemId = UUID.randomUUID();
-
-		// Act
 		try {
 			restTemplate.delete("http://localhost:" + port + "/api/v1/item/" + itemId);
 		} catch (Exception e) {
-			// Assert
 			assertTrue(e instanceof IllegalStateException);
 			assertTrue(e.getMessage().contains("does not exists"));
 		}
 	}
 
+	@Test
+	void givenValidItem_PutItemEndpoint_ShouldUpdateItem() {
+		String baseUrl = "http://localhost:" + port + "/api/v1/item/{itemId}";
+		UUID itemId = itemRepository.findAll().get(0).getId();
+		Item payload = new Item("Milk", 30, 2.0);
+		restTemplate.put(baseUrl, payload, itemId);
+		assertThat(itemRepository.findById(itemId).get().getTitle()).isEqualTo("Milk");
+		assertThat(itemRepository.findById(itemId).get().getQuantity()).isEqualTo(30);
+		assertThat(itemRepository.findById(itemId).get().getPrice()).isEqualTo(2.0);
+	}
+
+	@Test
+	void givenInvalidItemId_PutItemEndpoint_ShouldReturnBadRequest() {
+		String baseUrl = "http://localhost:" + port + "/api/v1/item/{itemId}";
+		UUID itemId = UUID.randomUUID();
+		Item payload = new Item("Milk", 30, 2.0);
+		ResponseEntity<String> response = restTemplate.exchange(baseUrl, HttpMethod.PUT, new HttpEntity<>(payload), String.class, itemId);
+		assertNotNull(response);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+	}
 
 }
