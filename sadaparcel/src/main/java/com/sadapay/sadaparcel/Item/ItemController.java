@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path="api/v1/item")
@@ -27,6 +28,12 @@ public class ItemController {
     public ResponseEntity<Item> registerNewItem(@Valid @RequestBody Item item){
         return ResponseEntity.status(HttpStatus.CREATED).body(itemService.addNew(item));
     }
+
+    @DeleteMapping("{itemId}")
+    public void deleteItem(@Valid @PathVariable("itemId") UUID itemId){
+
+    }
+
 
 
 

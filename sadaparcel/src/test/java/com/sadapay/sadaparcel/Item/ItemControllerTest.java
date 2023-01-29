@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 class ItemControllerTest {
@@ -39,5 +38,12 @@ class ItemControllerTest {
         when(itemService.addNew(newItem)).thenReturn(newItem);
         Item actualItem = itemController.registerNewItem(newItem).getBody();
         assertThat(actualItem).isEqualTo(newItem);
+    }
+
+    @Test
+    void givenExistingItemId_deleteItem_ShouldRemoveItem() {
+        ItemService itemService = mock(ItemService.class);
+        ItemController itemController = new ItemController(itemService);
+        UUID itemId = UUID.randomUUID();
     }
 }
