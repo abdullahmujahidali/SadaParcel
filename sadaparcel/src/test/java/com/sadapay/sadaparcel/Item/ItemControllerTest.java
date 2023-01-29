@@ -1,6 +1,10 @@
 package com.sadapay.sadaparcel.Item;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,12 +36,9 @@ class ItemControllerTest {
         ItemService itemService = mock(ItemService.class);
         ItemController itemController = new ItemController(itemService);
         Item newItem = new Item("orange", 15, 20.0);
-        assertThat(newItem.getTitle()).isInstanceOf(String.class).isNotNull();
-        assertThat(newItem.getQuantity()).isInstanceOf(Integer.class).isNotNull();
-        assertThat(newItem.getPrice()).isInstanceOf(Double.class).isNotNull();
         when(itemService.addNew(newItem)).thenReturn(newItem);
-        Item actualItem = itemController.registerNewItem(newItem).getBody();
-        assertThat(actualItem).isEqualTo(newItem);
+        ResponseEntity<String> response = itemController.registerNewItem(newItem, new BindException(newItem, "item"));
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     }
 
     @Test
@@ -45,5 +46,9 @@ class ItemControllerTest {
         ItemService itemService = mock(ItemService.class);
         ItemController itemController = new ItemController(itemService);
         UUID itemId = UUID.randomUUID();
+        doNothing().when(itemService).deleteItem(itemId);
+        itemController.deleteItem(itemId);
+        List<Item> updatedItems = itemController.getItems();
+        assertThat(updatedItems.stream().anyMatch(item -> item.getId().equals(itemId))).isFalse();
     }
 }
