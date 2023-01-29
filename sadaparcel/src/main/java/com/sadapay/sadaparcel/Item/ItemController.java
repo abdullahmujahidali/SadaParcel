@@ -47,8 +47,14 @@ public class ItemController {
     }
 
     @PutMapping("{itemId}")
-    public void updateItem(@Valid @PathVariable("itemId") UUID itemId, @RequestBody Item item){
-        itemService.updateItem(itemId, item);
+    public ResponseEntity<Void> updateItem(@Valid @PathVariable("itemId") UUID itemId, @RequestBody Item item){
+        try {
+            itemService.updateItem(itemId, item);
+            return ResponseEntity.noContent().build();
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
 
 }
