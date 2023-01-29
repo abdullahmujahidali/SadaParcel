@@ -1,0 +1,74 @@
+{
+  "heading-1": {
+    "fontSize": "2rem",
+    "lineHeight": 1,
+    "letterSpacing": "normal",
+    "fontWeight": "normal"
+  },
+  "heading-2": {
+    "fontSize": "1.5rem",
+    "fontWeight": "bold",
+    "lineHeight": 1,
+    "letterSpacing": "normal"
+  },
+  "heading-3": {
+    "fontSize": "1.25rem",
+    "fontWeight": "800",
+    "lineHeight": 1.2,
+    "letterSpacing": "normal"
+  },
+  "heading-4": {
+    "fontSize": "1.25rem",
+    "fontWeight": "500",
+    "lineHeight": 1,
+    "letterSpacing": "normal"
+  },
+  "heading-5": {
+    "fontSize": "1.125rem",
+    "fontWeight": "500",
+    "lineHeight": 1,
+    "letterSpacing": "normal"
+  },
+  "heading-6": {
+    "fontSize": "1rem",
+    "fontWeight": "bold",
+    "lineHeight": 1,
+    "letterSpacing": "normal"
+  },
+  "body-1": {
+    "fontSize": "1rem",
+    "fontWeight": "normal",
+    "lineHeight": 1.19,
+    "letterSpacing": "normal"
+  },
+  "body-2": {
+    "fontSize": "0.875rem",
+    "fontWeight": "normal",
+    "lineHeight": 1.71,
+    "letterSpacing": "normal"
+  },
+  "subtitle-2": {
+    "fontSize": "0.8125rem",
+    "fontWeight": "bold",
+    "lineHeight": 1.08,
+    "letterSpacing": "normal"
+  },
+  "button": {
+    "fontSize": "0.8125rem",
+    "fontWeight": "600",
+    "lineHeight": 1.08,
+    "letterSpacing": "normal"
+  },
+  "subtitle-1": {
+    "fontSize": "0.75rem",
+    "fontWeight": "bold",
+    "lineHeight": 1.17,
+    "letterSpacing": "1.2px"
+  },
+  "caption": {
+    "fontSize": "0.75rem",
+    "fontWeight": "normal",
+    "lineHeight": 1.75,
+    "letterSpacing": "normal"
+  }
+}

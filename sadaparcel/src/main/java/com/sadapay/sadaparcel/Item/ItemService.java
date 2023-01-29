@@ -49,6 +49,10 @@ public class ItemService {
         itemToUpdate.setPrice(item.getPrice());
         itemRepository.save(itemToUpdate);
     }
+    /**
+     * @param itemId
+     * @param itemDTO
+     */
     public void updateItemDiscount(UUID itemId, ItemDiscountDTO itemDTO) {
         if (!itemRepository.existsById(itemId)) {
             throw new IllegalArgumentException("Item with id " + itemId + " does not exist");
