@@ -1,0 +1,38 @@
+/*
+IMPORTANT: These resets should be replaced with `@tailwind base;`
+once `<StyledEngineProvider injectFirst>` is removed which is only needed for @mui/styles
+*/
+
+*,
+::before,
+::after {
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+
+::before,
+::after {
+  --tw-content: '';
+}
+
+hr {
+  height: 0;
+  color: inherit;
+  border-top-width: 1px;
+}
+
+@tailwind components;
+@tailwind utilities;
