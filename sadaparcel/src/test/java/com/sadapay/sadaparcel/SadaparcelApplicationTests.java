@@ -27,6 +27,9 @@ class SadaparcelApplicationTests {
 	@Test
 	void givenItems_GetItemsEndpoint_ShouldReturnItemsList(){
 		String baseUrl = "http://localhost:" + port + "/api/v1/item";
+		ResponseEntity<Item[]> response = restTemplate.getForEntity(baseUrl, Item[].class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(response.getBody().length).isGreaterThanOrEqualTo(2);
 	}
 
 }
