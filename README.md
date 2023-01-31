@@ -90,5 +90,4 @@ Conversely, clicking the same button will remove any existing 10% discount appli
 
 ### License
 
-Copyright © 20213, [Abdullah Mujahid](https://github.com/abdullahmujahidali).
-Released under the [MIT License](LICENSE).
+Copyright © 2023, [Abdullah Mujahid](https://github.com/abdullahmujahidali).
