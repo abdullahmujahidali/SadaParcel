@@ -105,14 +105,15 @@ export default function OfferView() {
         <DeleteDialog
           cancelBtnText='No'
           confirmBtnText='Yes'
-          deleteText='This will add 10% discount to this product'
+          deleteText={row?.isDiscount ? 'This will remove 10% discount applied to this item':
+          'This will add 10% discount to this product'}
           disabled={false}
           onClose={()=>{
             setDialogOpen(false);
           }}
           onSubmit={updateItemDiscount(row)}
           open={dialogOpen}
-          switchBtnColor
+          switchBtnColor={row?.isDiscount ? false : true}
         />
       </StyledContent>
     </Container>
