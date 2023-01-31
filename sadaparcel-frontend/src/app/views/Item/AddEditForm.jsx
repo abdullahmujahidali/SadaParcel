@@ -57,7 +57,7 @@ const AddEditForm = ({editItem, setOpen, itemListMutate}) => {
 };
 
 AddEditForm.propTypes = {
-  editItem: PropTypes.object,
+  editItem: PropTypes.bool,
   itemListMutate: PropTypes.func,
   setOpen: PropTypes.func,
 };
