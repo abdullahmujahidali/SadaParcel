@@ -15,7 +15,7 @@
     "@mui/icons-material": "^5.10.14",
     "@mui/material": "^5.10.14",
     "@mui/x-data-grid": "^5.17.12",
-    "axios": "^1.2.0",
+    "axios": "^1.6.0",
     "babel-preset-vite": "^1.0.4",
     "date-fns": "^2.29.3",
     "lodash": "^4.17.21",
